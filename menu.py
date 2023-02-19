@@ -1,4 +1,7 @@
-import os 
+import os
+import helpers
+
+helpers.limpiar_pantalla()
 def iniciar():
     while True:
         os.system('cls')
