@@ -76,6 +76,9 @@ def iniciar():
         if opcion == "5":
             print("Has seleccionado la opción 5")
             print("Eliminando cliente...\n")
+            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
+            print("Cliente borrado correctamente") if db.Clientes.borrar(dni) else print("No se ha encontrado el cliente")
+            
         if opcion == "6":
             print("Has seleccionado la opción 6")
             print("Saliendo...\n")
