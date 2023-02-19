@@ -1,6 +1,7 @@
 import copy
 import unittest
 import database as db
+import helpers
 
 class TestDatabase(unittest.TestCase):
     def setUp(self):  #setUp es un método que se ejecuta antes de cada test
@@ -30,6 +31,12 @@ class TestDatabase(unittest.TestCase):
         cliente_borrado= db.Clientes.borrar("15J") #se elimina un cliente
         cliente_rebuscado=db.Clientes.buscar("15J") #se busca el cliente eliminado
         self.assertNotEqual(cliente_borrado, cliente_rebuscado) #se comprueba que el cliente borrado no es igual al cliente rebuscado
+
+    def test_dni_valido(self):
+        self.assertTrue(helpers.dni_valido('00A', db.Clientes.lista))
+        self.assertFalse(helpers.dni_valido('23223S', db.Clientes.lista))
+        self.assertFalse(helpers.dni_valido('F35', db.Clientes.lista))
+        self.assertFalse(helpers.dni_valido('48H', db.Clientes.lista))
     
 if __name__ == '__main__':
     unittest.main()

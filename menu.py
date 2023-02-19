@@ -3,7 +3,6 @@ import helpers
 import database as db
 
 
-helpers.limpiar_pantalla()
 def iniciar():
     while True:
         os.system('cls')
@@ -23,7 +22,7 @@ def iniciar():
         print("=========================")
 
         opcion = input("Opción: ")
-        os.system('cls')
+        helpers.limpiar_pantalla()
 
         if opcion == "1":
             print("Has seleccionado la opción 1")
@@ -31,13 +30,13 @@ def iniciar():
             for cliente in db.Clientes.lista:
                 print(cliente)
 
-        if opcion == "2":
+        elif opcion == "2":
             print("Has seleccionado la opción 2")
             print("Buscando cliente...\n")
             cliente=db.Clientes.buscar(input("Introduzca el DNI del cliente: "))
             print(cliente) if cliente else print("No se ha encontrado el cliente")
 
-        if opcion == "3":
+        elif opcion == "3":
             print("Has seleccionado la opción 3")
             print("Añadiendo cliente...\n")
             dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
@@ -52,7 +51,7 @@ def iniciar():
             else:
                 print("No se ha creado el cliente")
 
-        if opcion == "4":
+        elif opcion == "4":
             print("Has seleccionado la opción 4")
             print("Modificando cliente...\n")
             dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
@@ -73,13 +72,13 @@ def iniciar():
             else:
                 print("No se ha encontrado el cliente")
                 
-        if opcion == "5":
+        elif opcion == "5":
             print("Has seleccionado la opción 5")
             print("Eliminando cliente...\n")
             dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
             print("Cliente borrado correctamente") if db.Clientes.borrar(dni) else print("No se ha encontrado el cliente")
-            
-        if opcion == "6":
+
+        elif opcion == "6":
             print("Has seleccionado la opción 6")
             print("Saliendo...\n")
             break
@@ -90,4 +89,5 @@ def iniciar():
             print("Opción incorrecta, por favor, introduzca una opción válida")
             input("Pulse ENTER para continuar...")
             os.system('cls')
+        
         

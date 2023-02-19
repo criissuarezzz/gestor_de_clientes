@@ -1,5 +1,6 @@
 import os
 import platform
+import re
 
 def limpiar_pantalla():
     if platform.system() == 'Windows':
@@ -15,4 +16,12 @@ def leer_texto(longitud_min=0, longitud_max=100, mensaje=None):
         texto=input("Introduzca un texto: ")
         if len(texto) >= longitud_min and len(texto) <= longitud_max:
             return texto
-        
+
+def dni_valido(dni, lista):
+    if not re.match('[0-9]{2} [A-Z]$', dni):
+        return False
+    for cliente in lista:
+        if cliente.dni == dni:
+            print("El DNI introducido es de otro cliente")
+            return False
+    return True
