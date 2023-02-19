@@ -55,6 +55,24 @@ def iniciar():
         if opcion == "4":
             print("Has seleccionado la opción 4")
             print("Modificando cliente...\n")
+            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
+            cliente=db.Clientes.buscar(dni)
+            if cliente:
+                print("Estás modificando un cliente con dni: " + dni + ", nombre: " + cliente.nombre + " y apellido: " + cliente.apellido)
+                print("¿Estás seguro de que quieres modificarlo?")
+                opcion=input("S/N: ").upper()
+                if opcion=="S":
+                    nombre=helpers.leer_texto(
+                        2, 30, f"Nombre(de 2 a 30 letras)[{cliente.nombre}]:").capitalize()
+                    apellido=helpers.leer_texto(
+                        2, 30, f"Apellido(de 2 a 30 letras)[{cliente.apellido}]:").capitalize()
+                    db.Clientes.modificar(dni, nombre, apellido)
+                    print("Cliente modificado correctamente")
+                else:
+                    print("No se ha modificado el cliente")
+            else:
+                print("No se ha encontrado el cliente")
+                
         if opcion == "5":
             print("Has seleccionado la opción 5")
             print("Eliminando cliente...\n")
