@@ -1,5 +1,7 @@
 import os
 import helpers
+import database as db
+
 
 helpers.limpiar_pantalla()
 def iniciar():
@@ -25,22 +27,46 @@ def iniciar():
 
         if opcion == "1":
             print("Has seleccionado la opción 1")
-            print("Listando clientes...")
+            print("Listando clientes...\n")
+            for cliente in db.Clientes.lista:
+                print(cliente)
+
         if opcion == "2":
             print("Has seleccionado la opción 2")
-            print("Buscando cliente...")
+            print("Buscando cliente...\n")
+            cliente=db.Clientes.buscar(input("Introduzca el DNI del cliente: "))
+            print(cliente) if cliente else print("No se ha encontrado el cliente")
+
         if opcion == "3":
             print("Has seleccionado la opción 3")
-            print("Añadiendo cliente...")
+            print("Añadiendo cliente...\n")
+            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
+            nombre=helpers.leer_texto(2,30, "Nombre:").capitalize()
+            apellido=helpers.leer_texto(2,30, "Apellido:").capitalize()
+            print("Estás creando un cliente con dni: " + dni + ", nombre: " + nombre + " y apellido: " + apellido)
+            print("¿Estás seguro de que quieres crearlo?")
+            opcion=input("S/N: ").upper()
+            if opcion=="S":
+                cliente=db.Clientes.crear(dni, nombre, apellido)
+                print("Cliente creado correctamente")
+            else:
+                print("No se ha creado el cliente")
+
         if opcion == "4":
             print("Has seleccionado la opción 4")
-            print("Modificando cliente...")
+            print("Modificando cliente...\n")
         if opcion == "5":
             print("Has seleccionado la opción 5")
-            print("Eliminando cliente...")
+            print("Eliminando cliente...\n")
         if opcion == "6":
             print("Has seleccionado la opción 6")
-            print("Saliendo...")
+            print("Saliendo...\n")
             break
         
         input("Pulse ENTER para continuar...")
+
+        if opcion not in ("1", "2", "3", "4", "5", "6"):
+            print("Opción incorrecta, por favor, introduzca una opción válida")
+            input("Pulse ENTER para continuar...")
+            os.system('cls')
+        
