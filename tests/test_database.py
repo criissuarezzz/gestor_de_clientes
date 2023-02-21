@@ -35,7 +35,7 @@ class TestDatabase(unittest.TestCase):
         self.assertNotEqual(cliente_borrado, cliente_rebuscado) #se comprueba que el cliente borrado no es igual al cliente rebuscado
 
     def test_dni_valido(self):
-        self.assertTrue(helpers.dni_valido('00A', db.Clientes.lista))
+        self.assertTrue(helpers.dni_valido('15J', db.Clientes.lista))
         self.assertFalse(helpers.dni_valido('23223S', db.Clientes.lista))
         self.assertFalse(helpers.dni_valido('F35', db.Clientes.lista))
         self.assertFalse(helpers.dni_valido('48H', db.Clientes.lista))
