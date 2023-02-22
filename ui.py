@@ -83,6 +83,17 @@ class CreateClientWindow(Toplevel, CenterWidgetMixin):
             self.center()
             self.transient(parent)
             self.grab_set()
+        
+        def build(self):
+            frame=Frame(self)
+            frame.pack(padx=20, pady=10)
+
+            Label(frame, text="DNI(no editable)").grid(row=0, column=0)
+            Label(frame, text="Nombre").grid(row=0, column=1)
+            Label(frame, text="Apellidos").grid(row=0, column=2)
+
+            dni=Entry(frame)
+            dni.grid
 
             
 
