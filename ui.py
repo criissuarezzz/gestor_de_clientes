@@ -144,6 +144,64 @@ class EditClientWindow(Toplevel, CenterWidgetMixin):
         self.validaciones[index] = valido
         self.actualizar.config(state=NORMAL if self.validaciones == [1, 1] else DISABLED)
 
+class SearchClientWindow(Toplevel, CenterWidgetMixin):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Buscar cliente")
+        self.build()
+        self.center()
+        self.transient(parent)
+        self.grab_set()
+    
+    def build(self):
+        frame = Frame(self)
+        frame.pack(padx=20, pady=10)
+
+        Label(frame, text="Buscar por:").grid(row=0, column=0)
+        Label(frame, text="Valor:").grid(row=0, column=1)
+
+        self.search_by = StringVar()
+        self.search_by.set("DNI")
+        OptionMenu(frame, self.search_by, "DNI", "Nombre", "Apellido").grid(row=1, column=0)
+
+        #no atrtibute parent solucion
+        
+
+        self.valor = Entry(frame)
+        self.valor.grid(row=1, column=1)
+        self.valor.bind("<KeyRelease>", self.validate)
+        self.parent = self.master
+
+        frame = Frame(self)
+        frame.pack(pady=10)
+
+        Button(frame, text="Buscar", command=self.search_client).grid(row=0, column=0)
+        Button(frame, text="Cancelar", command=self.close).grid(row=0, column=1)
+
+        self.validaciones = [0]
+        self.valor = self.valor
+
+    def search_client(self):
+        self.close()
+        self.destroy()
+        self.update()
+        self.parent.search_client(self.search_by.get(), self.valor.get())
+
+    def close(self):
+        self.destroy()
+        self.update()
+    
+    def validate(self, event):
+        valor = event.widget.get()
+        valido = helpers.dni_valido(valor, db.Clientes.lista) if self.search_by.get() == "DNI" \
+            else (valor.isalpha() and len(valor) >= 2 and len(valor) <= 30)
+        event.widget.configure({"bg": "Green" if valido else "Red"})
+        # Cambiar el estado del botón en base a las validaciones
+        self.validaciones[0] = valido
+        self.valor.config(state=NORMAL if self.validaciones == [1] else DISABLED)
+
+
+
 
 class MainWindow(Tk, CenterWidgetMixin):
     def __init__(self):
@@ -185,8 +243,12 @@ class MainWindow(Tk, CenterWidgetMixin):
         Button(frame, text="Crear", command=self.create).grid(row=0, column=0)
         Button(frame, text="Modificar", command=self.edit).grid(row=0, column=1)
         Button(frame, text="Borrar", command=self.delete).grid(row=0, column=2)
+        Button(frame, text="Buscar", command=self.search).grid(row=0, column=3)
 
         self.treeview = treeview
+    
+    def search(self):
+        SearchClientWindow(self)
 
     def delete(self):
         cliente = self.treeview.focus()

@@ -2,31 +2,30 @@ import csv
 import config
 
 
-class Cliente:
-    def __init__(self, dni, nombre, apellido):
+class Cliente:     #crea la clase cliente, con sus atributos
+    def __init__(self, dni, nombre, apellido):   #constructor de la clase con nombre, apellido y dni
         self.dni = dni
         self.nombre = nombre
         self.apellido = apellido
 
-    def __str__(self):
+    def __str__(self):     #método para imprimir los datos del cliente
         return f"({self.dni}) {self.nombre} {self.apellido}"
 
-    def to_dict(self):
+    def to_dict(self):    #método para convertir los datos del cliente en un diccionario
         return {'dni': self.dni, 'nombre': self.nombre, 'apellido': self.apellido}
 
 
-class Clientes:
+class Clientes:   #crea la clase clientes para gestionar los clientes
+    lista = []    #crea una lista vacía
+    with open(config.DATABASE_PATH, newline='\n') as fichero:   #abre el fichero csv
+        reader = csv.reader(fichero, delimiter=';')   #lee el fichero csv
+        for dni, nombre, apellido in reader:      #recorre el fichero csv
+            cliente = Cliente(dni, nombre, apellido)      #crea un objeto cliente con los datos del fichero csv
+            lista.append(cliente)           #añade el objeto cliente a la lista
 
-    lista = []
-    with open(config.DATABASE_PATH, newline='\n') as fichero:
-        reader = csv.reader(fichero, delimiter=';')
-        for dni, nombre, apellido in reader:
-            cliente = Cliente(dni, nombre, apellido)
-            lista.append(cliente)
-
-    @staticmethod
-    def buscar(dni):
-        for cliente in Clientes.lista:
+    @staticmethod     #método estático para buscar un cliente por su dni
+    def buscar(dni):    #funcion para buscar un cliente por su dni
+        for cliente in Clientes.lista:   
             if cliente.dni == dni:
                 return cliente
 
