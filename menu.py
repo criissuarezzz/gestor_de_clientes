@@ -5,7 +5,7 @@ import database as db
 
 def iniciar():
     while True:
-        os.system('cls')
+        helpers.limpiar_pantalla()
 
         print("=========================")
         print("  Bienvenido al manager  ")
@@ -33,13 +33,18 @@ def iniciar():
         elif opcion == "2":
             print("Has seleccionado la opción 2")
             print("Buscando cliente...\n")
-            cliente=db.Clientes.buscar(input("Introduzca el DNI del cliente: "))
+            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
+            cliente=db.Clientes.buscar(dni)
             print(cliente) if cliente else print("No se ha encontrado el cliente")
 
         elif opcion == "3":
             print("Has seleccionado la opción 3")
             print("Añadiendo cliente...\n")
-            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
+            dni=None
+            while True:
+                dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
+                if helpers.dni_valido(dni, db.Clientes.lista):
+                    break
             nombre=helpers.leer_texto(2,30, "Nombre:").capitalize()
             apellido=helpers.leer_texto(2,30, "Apellido:").capitalize()
             print("Estás creando un cliente con dni: " + dni + ", nombre: " + nombre + " y apellido: " + apellido)
