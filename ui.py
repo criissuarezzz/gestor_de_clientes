@@ -160,17 +160,13 @@ class SearchClientWindow(Toplevel, CenterWidgetMixin):
         Label(frame, text="Buscar por:").grid(row=0, column=0)
         Label(frame, text="Valor:").grid(row=0, column=1)
 
-        self.search_by = StringVar()
+        self.search_by = StringVar(padx=20)
         self.search_by.set("DNI")
-        OptionMenu(frame, self.search_by, "DNI", "Nombre", "Apellido").grid(row=1, column=0)
-
-        #no atrtibute parent solucion
-        
+        OptionMenu(frame, self.search_by, "DNI", "Nombre", "Apellido").grid(row=1, column=0)        
 
         self.valor = Entry(frame)
         self.valor.grid(row=1, column=1)
         self.valor.bind("<KeyRelease>", self.validate)
-        self.parent = self.master
 
         frame = Frame(self)
         frame.pack(pady=10)

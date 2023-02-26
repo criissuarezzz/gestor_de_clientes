@@ -25,21 +25,21 @@ class Clientes:   #crea la clase clientes para gestionar los clientes
 
     @staticmethod     #método estático para buscar un cliente por su dni
     def buscar(dni):    #funcion para buscar un cliente por su dni
-        for cliente in Clientes.lista:   
-            if cliente.dni == dni:
+        for cliente in Clientes.lista:      #recorre la lista de clientes
+            if cliente.dni == dni:    #si el dni del cliente es igual al dni pasado por parámetro devuelve el cliente
                 return cliente
 
     @staticmethod
-    def crear(dni, nombre, apellido):
-        cliente = Cliente(dni, nombre, apellido)
-        Clientes.lista.append(cliente)
-        Clientes.guardar()
-        return cliente
+    def crear(dni, nombre, apellido):    #funcion para crear un cliente
+        cliente = Cliente(dni, nombre, apellido)     #crea un objeto cliente con los datos pasados por parámetro
+        Clientes.lista.append(cliente)      #añade el objeto cliente a la lista
+        Clientes.guardar()    #guarda los datos en el fichero csv
+        return cliente     #devuelve el cliente
 
     @staticmethod
-    def modificar(dni, nombre, apellido):
-        for indice, cliente in enumerate(Clientes.lista):
-            if cliente.dni == dni:
+    def modificar(dni, nombre, apellido):    #funcion para modificar un cliente
+        for indice, cliente in enumerate(Clientes.lista):    #recorre la lista de clientes
+            if cliente.dni == dni:    #si el dni del cliente es igual al dni pasado por parámetro modifica los datos del cliente y devuelve el cliente modificado
                 Clientes.lista[indice].nombre = nombre
                 Clientes.lista[indice].apellido = apellido
                 Clientes.guardar()
@@ -54,7 +54,7 @@ class Clientes:   #crea la clase clientes para gestionar los clientes
                 return cliente
 
     @staticmethod
-    def guardar():
+    def guardar():     #funcion para guardar los datos en el fichero csv
         with open(config.DATABASE_PATH, 'w', newline='\n') as fichero:
             writer = csv.writer(fichero, delimiter=';')
             for cliente in Clientes.lista:
