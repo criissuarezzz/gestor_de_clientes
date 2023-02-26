@@ -46,13 +46,13 @@ def iniciar():    #funcion para iniciar el menu
                 dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()   #leemos el dni del cliente y  lo pasamos a mayusculas
                 if helpers.dni_valido(dni, db.Clientes.lista):   #comprobamos que el dni cumple el formato y que no se repite
                     break
-            nombre=helpers.leer_texto(2,30, "Nombre:").capitalize()
-            apellido=helpers.leer_texto(2,30, "Apellido:").capitalize()
-            print("Estás creando un cliente con dni: " + dni + ", nombre: " + nombre + " y apellido: " + apellido)
+            nombre=helpers.leer_texto(2,30, "Nombre:").capitalize()    #leemos el nombre del cliente y lo pasamos a mayusculas
+            apellido=helpers.leer_texto(2,30, "Apellido:").capitalize()  #leemos el apellido del cliente y lo pasamos a mayusculas
+            print("Estás creando un cliente con dni: " + dni + ", nombre: " + nombre + " y apellido: " + apellido)    #mostramos los datos del cliente para asegurarnos de que son correctos
             print("¿Estás seguro de que quieres crearlo?")
             opcion=input("S/N: ").upper()
             if opcion=="S":
-                cliente=db.Clientes.crear(dni, nombre, apellido)
+                cliente=db.Clientes.crear(dni, nombre, apellido)    #creamos el cliente en la base de datos
                 print("Cliente creado correctamente")
             else:
                 print("No se ha creado el cliente")
@@ -60,19 +60,19 @@ def iniciar():    #funcion para iniciar el menu
         elif opcion == "4":
             print("Has seleccionado la opción 4")
             print("Modificando cliente...\n")
-            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
-            cliente=db.Clientes.buscar(dni)
-            if cliente:
+            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()    #leemos el dni del cliente y  lo pasamos a mayusculas
+            cliente=db.Clientes.buscar(dni)   #buscamos el cliente en la base de datos
+            if cliente:   #si el cliente existe
                 print("Estás modificando un cliente con dni: " + dni + ", nombre: " + cliente.nombre + " y apellido: " + cliente.apellido)
                 print("¿Estás seguro de que quieres modificarlo?")
                 opcion=input("S/N: ").upper()
                 if opcion=="S":
                     nombre=helpers.leer_texto(
-                        2, 30, f"Nombre(de 2 a 30 letras)[{cliente.nombre}]:").capitalize()
+                        2, 30, f"Nombre(de 2 a 30 letras)[{cliente.nombre}]:").capitalize()   #leemos el nombre del cliente y lo pasamos a mayusculas
                     apellido=helpers.leer_texto(
-                        2, 30, f"Apellido(de 2 a 30 letras)[{cliente.apellido}]:").capitalize()
-                    db.Clientes.modificar(dni, nombre, apellido)
-                    print("Cliente modificado correctamente")
+                        2, 30, f"Apellido(de 2 a 30 letras)[{cliente.apellido}]:").capitalize()     #leemos el apellido del cliente y lo pasamos a mayusculas
+                    db.Clientes.modificar(dni, nombre, apellido)   #modificamos el cliente en la base de datos
+                    print("Cliente modificado correctamente") 
                 else:
                     print("No se ha modificado el cliente")
             else:
@@ -81,9 +81,9 @@ def iniciar():    #funcion para iniciar el menu
         elif opcion == "5":
             print("Has seleccionado la opción 5")
             print("Eliminando cliente...\n")
-            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()
-            print("Cliente borrado correctamente") if db.Clientes.borrar(dni) else print("No se ha encontrado el cliente")
-
+            dni=helpers.leer_texto(3,3, "DNI(2 números y una letra):").upper()    #leemos el dni del cliente y  lo pasamos a mayusculas
+            print("Cliente borrado correctamente") if db.Clientes.borrar(dni) else print("No se ha encontrado el cliente")   #borramos el cliente en la base de datos
+  
         elif opcion == "6":
             print("Has seleccionado la opción 6")
             print("Saliendo...\n")
@@ -91,7 +91,7 @@ def iniciar():    #funcion para iniciar el menu
         
         input("Pulse ENTER para continuar...")
 
-        if opcion not in ("1", "2", "3", "4", "5", "6"):
+        if opcion not in ("1", "2", "3", "4", "5", "6"):     #si la opcion no es ninguna de las anteriores, mostramos un mensaje de error
             print("Opción incorrecta, por favor, introduzca una opción válida")
             input("Pulse ENTER para continuar...")
             os.system('cls')
